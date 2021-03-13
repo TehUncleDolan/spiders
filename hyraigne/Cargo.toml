@@ -1,0 +1,12 @@
+[package]
+name = "hyraigne"
+description = "Web spiders to scrap various man{ga,hua;hwa}s websites"
+version = "0.1.0"
+authors = ["Teh Uncle Dolan"]
+license = "BSD-3-Clause"
+edition = "2018"
+repository = "https://github.com/TehUncleDolan/spiders"
+readme = "README.md"
+keywords = ["scraping", "manga", "manhua", "manhwa", "webtoon"]
+
+[dependencies]
