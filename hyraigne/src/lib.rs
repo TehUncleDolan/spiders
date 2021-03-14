@@ -53,6 +53,7 @@
 // }}}
 
 mod error;
+mod spiders;
 
 pub use error::{
     Error,

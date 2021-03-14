@@ -11,3 +11,7 @@ keywords = ["scraping", "manga", "manhua", "manhwa", "webtoon"]
 
 [dependencies]
 thiserror = "1.0"
+kuchiki = "0.8"
+log = "0.4"
+ureq = "2.0"
+url = "2.0"
