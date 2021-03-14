@@ -10,3 +10,4 @@ readme = "README.md"
 keywords = ["scraping", "manga", "manhua", "manhwa", "webtoon"]
 
 [dependencies]
+thiserror = "1.0"
