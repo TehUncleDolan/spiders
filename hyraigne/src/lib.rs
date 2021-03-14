@@ -53,9 +53,21 @@
 // }}}
 
 mod error;
+mod sites;
 mod spiders;
+mod types;
 
 pub use error::{
     Error,
     Result,
+};
+
+pub use sites::Site;
+
+pub use types::{
+    Chapter,
+    Filter,
+    Options,
+    Page,
+    Series,
 };
