@@ -1,0 +1,18 @@
+[package]
+name = "bibe"
+description = "CLI tool to download from various man{ga,hua;hwa}s websites"
+version = "0.1.0"
+authors = ["Teh Uncle Dolan"]
+license = "BSD-3-Clause"
+edition = "2018"
+repository = "https://github.com/TehUncleDolan/spiders"
+readme = "README.md"
+keywords = ["scraping", "manga", "manhua", "manhwa", "webtoon"]
+categories = ["command-line-utilities"]
+
+[dependencies]
+anyhow = "1.0"
+clap = "3.0.0-beta.2"
+env_logger = "0.8"
+url = "2.0"
+hyraigne = { path = "../hyraigne" }
