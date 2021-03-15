@@ -53,6 +53,7 @@
 // }}}
 
 mod error;
+mod fs;
 mod sites;
 mod spiders;
 mod types;
