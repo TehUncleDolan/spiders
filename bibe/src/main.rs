@@ -57,6 +57,7 @@ use anyhow::{
     Result,
 };
 use clap::Clap;
+use env_logger::Env;
 use hyraigne::Site;
 use std::path::PathBuf;
 use url::Url;
@@ -98,7 +99,10 @@ struct Args {
 }
 
 fn main() -> Result<()> {
-    env_logger::init();
+    env_logger::Builder::from_env(
+        Env::default().default_filter_or("hyraigne=info"),
+    )
+    .init();
 
     let args: Args = Args::parse();
 
