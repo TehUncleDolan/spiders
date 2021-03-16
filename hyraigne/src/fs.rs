@@ -82,23 +82,27 @@ mod tests {
 
     #[test]
     fn test_sanitize_trailing() {
-        assert_eq!(sanitize("foo   "), "foo");
-        assert_eq!(sanitize("foo."), "foo");
-        assert_eq!(sanitize("foo. ."), "foo");
-        assert_eq!(sanitize("foo. . "), "foo");
+        let expected: PathBuf = "foo".into();
+
+        assert_eq!(sanitize_name("foo   "), expected);
+        assert_eq!(sanitize_name("foo."), expected);
+        assert_eq!(sanitize_name("foo. ."), expected);
+        assert_eq!(sanitize_name("foo. . "), expected);
     }
 
     #[test]
     fn test_sanitize_invalid() {
-        assert_eq!(sanitize("foo/bar/"), "foo_bar_");
-        assert_eq!(sanitize("foo:bar"), "foo_bar");
-        assert_eq!(sanitize("foo?bar"), "foo_bar");
-        assert_eq!(sanitize("foo|bar"), "foo_bar");
-        assert_eq!(sanitize("foo*bar"), "foo_bar");
-        assert_eq!(sanitize("foo>bar"), "foo_bar");
-        assert_eq!(sanitize("foo<bar"), "foo_bar");
-        assert_eq!(sanitize("foo\\bar"), "foo_bar");
-        assert_eq!(sanitize("foo\"bar"), "foo_bar");
+        let expected: PathBuf = "foo_bar".into();
+
+        assert_eq!(sanitize_name("foo/bar/"), PathBuf::from("foo_bar_"));
+        assert_eq!(sanitize_name("foo:bar"), expected);
+        assert_eq!(sanitize_name("foo?bar"), expected);
+        assert_eq!(sanitize_name("foo|bar"), expected);
+        assert_eq!(sanitize_name("foo*bar"), expected);
+        assert_eq!(sanitize_name("foo>bar"), expected);
+        assert_eq!(sanitize_name("foo<bar"), expected);
+        assert_eq!(sanitize_name("foo\\bar"), expected);
+        assert_eq!(sanitize_name("foo\"bar"), expected);
     }
 }
 
