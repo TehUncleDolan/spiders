@@ -69,7 +69,7 @@ impl crate::Site for Site {
             let mut url = series.url.clone();
             url.query_pairs_mut().append_pair("page", &page.to_string());
 
-            log::info!("extracting chapter from page {}", page);
+            log::info!("extracting chapter from page {}…", page);
 
             let html = self.spider.get_html(&url)?;
             chapters.extend(
