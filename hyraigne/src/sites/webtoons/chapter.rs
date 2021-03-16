@@ -40,10 +40,13 @@ pub(super) fn scrape_from_html<'a>(
 
 /// Get a path to the directory where where the chapter will be saved.
 pub(super) fn get_path(path: &Path, chapter: &Chapter<'_>) -> PathBuf {
-    let dirname = format!("{:03}", chapter.id);
+    let dirname = crate::fs::sanitize_name(&format!(
+        "{} {:03}",
+        chapter.series.title, chapter.id
+    ));
     let path = series::get_path(path, chapter.series);
 
-    [&path, Path::new(&dirname)].iter().collect()
+    [path, dirname].iter().collect()
 }
 
 /// Extract chapter ID from `<li id="episode_82" data-episode-no="ID">`.
