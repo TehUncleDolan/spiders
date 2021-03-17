@@ -86,3 +86,27 @@ fn pagination_from_html(html: &kuchiki::NodeRef) -> Result<Pagination> {
     #[allow(clippy::cast_possible_truncation)] // No risk here.
     Ok(Pagination::new(chapters[0], chapters.len() as u16))
 }
+
+// Tests {{{
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_scraping() {
+        let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+        path.push("testdata/webtoons.com/series.html");
+        let html = std::fs::read_to_string(&path).expect("test data");
+        let document = kuchiki::parse_html().one(html);
+
+        let series = scrape_from_html(&document).unwrap();
+
+        assert_eq!(series.title, "Hell is Other People");
+        assert_eq!(series.url.as_str(), "https://www.webtoons.com/fr/thriller/hell-is-other-people/list?title_no=1841");
+        assert_eq!(series.pagination.chapter_count, 78);
+        assert_eq!(series.pagination.page_size, 10);
+    }
+}
+
+// }}}

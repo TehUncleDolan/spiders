@@ -84,3 +84,30 @@ fn url_from_html(html: &kuchiki::NodeRef) -> Result<Url> {
         Error::Scraping(format!("invalid chapter URL `{}`: {}", url, err))
     })
 }
+
+// Tests {{{
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::types::Pagination;
+
+    #[test]
+    fn test_scraping() {
+        let series = Series {
+            title: "Example".to_owned(),
+            url: Url::parse("http://example.com/").unwrap(),
+            pagination: Pagination::new(78, 10),
+        };
+        let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+        path.push("testdata/webtoons.com/series.html");
+        let html = std::fs::read_to_string(&path).expect("test data");
+        let document = kuchiki::parse_html().one(html);
+
+        let chapters = scrape_from_html(&document, &series).unwrap();
+
+        assert_eq!(chapters.len(), 10);
+    }
+}
+
+// }}}
