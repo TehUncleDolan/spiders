@@ -127,7 +127,7 @@ impl crate::Site for Site {
                 continue;
             }
 
-            log::debug!("downloading {}…", path.display());
+            log::info!("downloading {}…", path.display());
             self.spider
                 .get_image(&page.main, &page.chapter.url, &mut bytes)?;
 

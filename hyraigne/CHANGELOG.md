@@ -20,6 +20,10 @@ Possible sections are:
 - Web spider for https://webtoonscan.com.
 - Add a factory method to instanciate the right spider according to the URL.
 
+### Changed
+
+- Log messages for page downloading are now at info level instead of debug.
+
 ## [0.1.0] - 2021-03-18
 
 ### Added
