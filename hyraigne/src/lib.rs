@@ -63,9 +63,10 @@ pub use error::{
     Result,
 };
 
+// Can't merge the two "pub use" here.
+// See https://github.com/rust-lang/rust/issues/64762
+pub use sites::get_spider_for;
 pub use sites::Site;
-pub use sites::WebtoonScan;
-pub use sites::Webtoons;
 
 pub use types::{
     Chapter,

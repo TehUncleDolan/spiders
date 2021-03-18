@@ -11,16 +11,15 @@ from there.
 Here's a simple example that download a series from `webtoons.com`:
 
 ```rust,no_run
-use hyraigne::Site;
 use url::Url;
 
 fn main() {
-    let opts = hyraigne::Options::new(1000, 3, "/home/me/Webtoons".into());
-    let filter = hyraigne::Filter::new(0..=u16::MAX);
-    let spider = hyraigne::Webtoons::new_from_options(opts);
-
     let url = Url::parse("https://www.webtoons.com/en/fantasy/tower-of-god/list?title_no=95")
         .expect("invalid URL");
+    let opts = hyraigne::Options::new(1000, 3, "/home/me/Webtoons".into());
+    let filter = hyraigne::Filter::new(0..=u16::MAX);
+    let spider = hyraigne::get_spider_for(&url, opts).expect("unsupported URL");
+
     let series = spider.get_series(&url)
         .expect("failed to scrape series info");
     let chapters = spider.get_chapters(&series, filter)

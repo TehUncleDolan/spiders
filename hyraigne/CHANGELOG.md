@@ -18,6 +18,7 @@ Possible sections are:
 ### Added
 
 - Web spider for https://webtoonscan.com.
+- Add a factory method to instanciate the right spider according to the URL.
 
 ## [0.1.0] - 2021-03-18
 

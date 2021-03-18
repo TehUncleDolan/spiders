@@ -17,19 +17,22 @@ use std::path::PathBuf;
 use url::Url;
 
 /// A web spider for `https://webtoonscan.com`.
-pub struct Site {
+pub(crate) struct Site {
     spider: HttpClient,
     output: PathBuf,
 }
 
-impl crate::Site for Site {
-    fn new_from_options(options: Options) -> Self {
+impl Site {
+    /// Initialize the web spider with the given options.
+    pub(crate) fn new(options: Options) -> Self {
         Self {
             spider: HttpClient::new(options.delay, options.retry),
             output: options.output,
         }
     }
+}
 
+impl crate::Site for Site {
     fn get_series(&self, url: &Url) -> Result<Series> {
         log::info!("scraping series info from {}…", url.as_str());
 

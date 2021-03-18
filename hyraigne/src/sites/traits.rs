@@ -1,7 +1,6 @@
 use crate::{
     Chapter,
     Filter,
-    Options,
     Page,
     Result,
     Series,
@@ -10,9 +9,6 @@ use url::Url;
 
 /// A website scraper.
 pub trait Site {
-    /// Build a site-specific web spider with the given options.
-    fn new_from_options(options: Options) -> Self;
-
     /// Fetch the series at `url`.
     fn get_series(&self, url: &Url) -> Result<Series>;
 
