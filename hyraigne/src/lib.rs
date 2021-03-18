@@ -64,6 +64,7 @@ pub use error::{
 };
 
 pub use sites::Site;
+pub use sites::WebtoonScan;
 pub use sites::Webtoons;
 
 pub use types::{
