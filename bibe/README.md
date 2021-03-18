@@ -5,6 +5,28 @@
 Bibe is a command-line tool that allows you to download every chapter (or a
 subset) of a series from websites like `webtoons.com` or `mangadex.org`.
 
+## How to install
+
+### Pre-compiled binaries
+
+You can download a pre-compiled executable for Linux, MacOS and Windows
+operating systems, then you should copy that executable to a location from your
+`$PATH` env:
+
+- [Linux 64bit](https://github.com/TehUncleDolan/spiders/releases/download/bibe-v0.1.0/bibe_amd64)
+- [MacOS 64bit](https://github.com/TehUncleDolan/spiders/releases/download/bibe-v0.1.0/bibe_darwin)
+- [Windows 64bit](https://github.com/TehUncleDolan/spiders/releases/download/bibe-v0.1.0/bibe.exe)
+
+You might need to run `chmod +x bibe_amd64` or `chmod +x bibe_darwin`.
+
+### Build Manually
+
+If you prefer to build `bibe` manually, or a pre-compiled executable is not
+provided for your platform, then you can build `bibe` from the source:
+
+- [Install Rust](https://www.rust-lang.org/tools/install)
+- Run `cargo install bibe`
+
 ## Usage
 
 ```bash
