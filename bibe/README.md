@@ -50,7 +50,7 @@ The simplest invocation only requires you to specify the URL of the series you
 want to download, the other options have sensible defaults.
 
 ```bash
-bibe -u 'https://www.webtoons.com/fr/thriller/hell-is-other-people/list?title_no=1841'
+bibe -u "https://www.webtoons.com/fr/thriller/hell-is-other-people/list?title_no=1841"
 ```
 
 If you only want to download a subset of the chapters, you can specify a range.
@@ -58,7 +58,7 @@ For example, the following command will download the first 10 chapters under the
 specified directory:
 
 ```bash
-bibe --url 'https://www.webtoons.com/fr/thriller/hell-is-other-people/list?title_no=1841' \
+bibe --url "https://www.webtoons.com/fr/thriller/hell-is-other-people/list?title_no=1841" \
      --begin 1
      --end 10
      --output ~/Documents/Books/Webtoons
