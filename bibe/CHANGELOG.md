@@ -15,6 +15,10 @@ Possible sections are:
 
 ## [Unreleased] - ReleaseDate
 
+### Added
+
+- Support for https://webtoonscan.com/
+
 ## [0.1.0] - 2021-03-18
 
 ### Added

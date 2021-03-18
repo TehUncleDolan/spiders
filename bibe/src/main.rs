@@ -53,12 +53,12 @@
 // }}}
 
 use anyhow::{
+    anyhow,
     ensure,
     Result,
 };
 use clap::Clap;
 use env_logger::Env;
-use hyraigne::Site;
 use std::path::PathBuf;
 use url::Url;
 
@@ -111,11 +111,13 @@ fn main() -> Result<()> {
     ensure!(begin <= end, "`begin` must be lower than `end`");
     let range = begin..=end;
 
+    let url = args.url;
     let opts = hyraigne::Options::new(args.delay, args.retry, args.output);
     let filter = hyraigne::Filter::new(range);
-    let spider = hyraigne::Webtoons::new_from_options(opts);
+    let spider = hyraigne::get_spider_for(&url, opts)
+        .ok_or_else(|| anyhow!("{} not supported", url.as_str()))?;
 
-    let series = spider.get_series(&args.url)?;
+    let series = spider.get_series(&url)?;
     let chapters = spider.get_chapters(&series, filter)?;
 
     spider.mkdir(&chapters)?;

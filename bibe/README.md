@@ -5,6 +5,11 @@
 Bibe is a command-line tool that allows you to download every chapter (or a
 subset) of a series from websites like `webtoons.com` or `mangadex.org`.
 
+## Supported website
+
+- [WEBTOON](https://www.webtoons.com/)
+- [WebtoonScan](https://webtoonscan.com/)
+
 ## How to install
 
 ### Pre-compiled binaries
