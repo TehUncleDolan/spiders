@@ -15,6 +15,8 @@ Possible sections are:
 
 ## [Unreleased] - ReleaseDate
 
+## [0.1.1] - 2021-03-18
+
 ### Added
 
 - Web spider for https://webtoonscan.com.
