@@ -15,6 +15,8 @@ Possible sections are:
 
 ## [Unreleased] - ReleaseDate
 
+## [0.1.0] - 2021-03-18
+
 ### Added
 
 - Support for https://webtoons.com.
