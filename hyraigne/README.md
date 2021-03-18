@@ -35,6 +35,11 @@ fn main() {
 }
 ```
 
+## Supported website
+
+- [WEBTOON](https://www.webtoons.com/)
+- [WebtoonScan](https://webtoonscan.com/)
+
 ## About the name
 
 “Hyraigne” is an old word, from Middle French, for “spider”.
