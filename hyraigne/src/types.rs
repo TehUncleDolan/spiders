@@ -43,13 +43,27 @@ impl Options {
 pub struct Filter {
     /// Range of chapters to download.
     pub(crate) range: RangeInclusive<u16>,
+
+    /// Chapters language.
+    pub(crate) language: String,
+
+    /// Preferred scantrad group, in case of conflict.
+    pub(crate) preferred_groups: Vec<String>,
 }
 
 impl Filter {
     /// Configure a new chapter filter.
     #[must_use]
-    pub fn new(range: RangeInclusive<u16>) -> Self {
-        Self { range }
+    pub fn new(
+        range: RangeInclusive<u16>,
+        language: Option<String>,
+        preferred_groups: Vec<String>,
+    ) -> Self {
+        Self {
+            range,
+            language: language.unwrap_or_default(),
+            preferred_groups,
+        }
     }
 }
 
@@ -72,6 +86,9 @@ pub struct Chapter<'a> {
 
     /// Series containing this chapter.
     pub(crate) series: &'a Series,
+
+    /// Volume name.
+    pub(crate) volume: Option<String>,
 
     /// URL of the chapter page or endpoint.
     pub(crate) url: Url,
@@ -96,6 +113,9 @@ pub struct Page<'a> {
 
     /// URL of the page.
     pub(crate) main: Url,
+
+    /// Fallback URL (used if the first one doesn't work), if any.
+    pub(crate) fallback: Option<Url>,
 }
 
 /// Information about the pagination scheme used for the series.

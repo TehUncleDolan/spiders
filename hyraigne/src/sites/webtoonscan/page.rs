@@ -37,7 +37,11 @@ pub(super) fn scrape_from_html<'a>(
                 Error::Scraping(format!("invalid page URL `{}`: {}", url, err))
             })?;
 
-            Ok(Page { chapter, main: url })
+            Ok(Page {
+                chapter,
+                main: url,
+                fallback: None,
+            })
         })
         .collect::<Result<Vec<_>>>()
 }
@@ -71,11 +75,13 @@ mod tests {
         let chapter = Chapter {
             id: 42.0,
             series: &series,
+            volume: None,
             url: Url::parse("http://example.com/42/").unwrap(),
         };
         let page = Page {
             chapter: &chapter,
             main: Url::parse("http://example.com/42/uWu.jpg").unwrap(),
+            fallback: None,
         };
         let expected = "Downloads/Example/Example 042/007.jpg";
 
@@ -94,6 +100,7 @@ mod tests {
         let chapter = Chapter {
             id: 42.0,
             series: &series,
+            volume: None,
             url: Url::parse("http://example.com/42/").unwrap(),
         };
         let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));

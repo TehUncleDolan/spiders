@@ -290,6 +290,8 @@ dependencies = [
  "log",
  "once_cell",
  "regex",
+ "serde",
+ "serde_json",
  "thiserror",
  "ureq",
  "url",
@@ -680,6 +682,9 @@ name = "serde"
 version = "1.0.124"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "bd761ff957cb2a45fbb9ab3da6512de9de55872866160b23c25f1a841e99d29f"
+dependencies = [
+ "serde_derive",
+]
 
 [[package]]
 name = "serde_derive"
@@ -917,6 +922,7 @@ dependencies = [
  "idna",
  "matches",
  "percent-encoding",
+ "serde",
 ]
 
 [[package]]

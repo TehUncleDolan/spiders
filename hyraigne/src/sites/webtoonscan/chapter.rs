@@ -30,8 +30,14 @@ pub(super) fn scrape_from_html<'a>(
             let chapter = chapter.as_node();
             let url = url_from_html(chapter)?;
             let id = f64::from(id_from_url(&url)?);
+            let volume = None;
 
-            Ok(Chapter { id, series, url })
+            Ok(Chapter {
+                id,
+                series,
+                volume,
+                url,
+            })
         })
         .collect::<Result<Vec<_>>>()
 }

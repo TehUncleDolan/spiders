@@ -3,6 +3,7 @@ use crate::{
     Result,
 };
 use kuchiki::traits::*;
+use serde::de::DeserializeOwned;
 use std::{
     io::Read,
     thread,
@@ -79,6 +80,25 @@ impl Spider {
         })?;
 
         Ok(())
+    }
+
+    /// Make a call at `url` and parse the response.
+    pub(crate) fn get_json<T>(&self, url: &Url) -> Result<T>
+    where
+        T: DeserializeOwned,
+    {
+        let request = self
+            .agent
+            .request_url("GET", url)
+            .set("accept", "application/json");
+        let response = self.call(&request, url)?;
+
+        serde_json::from_reader(response.into_reader()).map_err(|err| {
+            log::error!("failed to read JSON from {}: {}", url.as_str(), err);
+            Error::Payload {
+                url: url.to_string(),
+            }
+        })
     }
 
     /// Execute a request and handle retries.

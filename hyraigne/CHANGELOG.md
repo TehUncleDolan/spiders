@@ -15,6 +15,13 @@ Possible sections are:
 
 ## [Unreleased] - ReleaseDate
 
+### Added
+
+- Web spider for https://mangadex.org.
+- Chapter can be filtered by language.
+- A list of preferred scantrad team can be supplied, it will be used to select a
+  chapter when more than one version are available.
+
 ## [0.1.1] - 2021-03-18
 
 ### Added

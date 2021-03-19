@@ -32,6 +32,7 @@ pub(super) fn scrape_from_html<'a>(
             Ok(Chapter {
                 id: f64::from(id_from_html(chapter)?),
                 series,
+                volume: None,
                 url: url_from_html(chapter)?,
             })
         })

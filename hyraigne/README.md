@@ -17,7 +17,7 @@ fn main() {
     let url = Url::parse("https://www.webtoons.com/en/fantasy/tower-of-god/list?title_no=95")
         .expect("invalid URL");
     let opts = hyraigne::Options::new(1000, 3, "/home/me/Webtoons".into());
-    let filter = hyraigne::Filter::new(0..=u16::MAX);
+    let filter = hyraigne::Filter::new(0..=u16::MAX, None, Vec::new());
     let spider = hyraigne::get_spider_for(&url, opts).expect("unsupported URL");
 
     let series = spider.get_series(&url)
@@ -35,8 +35,9 @@ fn main() {
 }
 ```
 
-## Supported website
+## Supported websites
 
+- [MangaDex](https://mangadex.org/)
 - [WEBTOON](https://www.webtoons.com/)
 - [WebtoonScan](https://webtoonscan.com/)
 
