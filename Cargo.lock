@@ -45,7 +45,8 @@ dependencies = [
  "anyhow",
  "clap",
  "env_logger",
- "hyraigne 0.1.1",
+ "hyraigne 0.1.2",
+ "log",
  "url",
 ]
 
@@ -269,14 +270,16 @@ checksum = "9a3a5bfb195931eeb336b2a7b4d761daec841b97f947d34394601737a7bba5e4"
 
 [[package]]
 name = "hyraigne"
-version = "0.1.1"
+version = "0.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "344fd8aff9c04d685f1616e7286ce5e30318e9859fe1e154665788ac50bc6c28"
+checksum = "06bf8d5457d991fcaf9a020c86ba9381b497ecf258d6760970fa84657f189f55"
 dependencies = [
  "kuchiki",
  "log",
  "once_cell",
  "regex",
+ "serde",
+ "serde_json",
  "thiserror",
  "ureq",
  "url",

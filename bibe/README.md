@@ -7,6 +7,7 @@ subset) of a series from websites like `webtoons.com` or `mangadex.org`.
 
 ## Supported website
 
+- [MangaDex](https://mangadex.org/)
 - [WEBTOON](https://www.webtoons.com/)
 - [WebtoonScan](https://webtoonscan.com/)
 
@@ -43,12 +44,14 @@ FLAGS:
     -V, --version    Prints version information
 
 OPTIONS:
-    -b, --begin <begin>      Start downloading from this chapter [env: BIBE_BEGIN=]
-    -d, --delay <delay>      Delay between each request (in ms) [env: BIBE_DELAY=] [default: 1000]
-    -e, --end <end>          Stop downloading after this chapter [env: BIBE_END=]
-    -o, --output <output>    Output directory [env: BIBE_OUTPUT=] [default: .]
-    -r, --retry <retry>      Max number of retry for HTTP requests [env: BIBE_RETRY=] [default: 3]
-    -u, --url <url>          Series URL [env: BIBE_URL=]
+    -b, --begin <begin>       Start downloading from this chapter [env: BIBE_BEGIN=]
+    -d, --delay <delay>       Delay between each request (in ms) [env: BIBE_DELAY=] [default: 1000]
+    -e, --end <end>           Stop downloading after this chapter [env: BIBE_END=]
+    -g, --group <group>...    Preferred scantrad group in case of conflict [env: BIBE_GROUPS=]
+    -l, --lang <lang>         Chapters language [env: BIBE_LANG=] [default: gb]
+    -o, --output <output>     Output directory [env: BIBE_OUTPUT=] [default: .]
+    -r, --retry <retry>       Max number of retry for HTTP requests [env: BIBE_RETRY=] [default: 3]
+    -u, --url <url>           Series URL [env: BIBE_URL=]
 ```
 
 The simplest invocation only requires you to specify the URL of the series you

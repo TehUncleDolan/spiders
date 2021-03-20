@@ -15,6 +15,12 @@ Possible sections are:
 
 ## [Unreleased] - ReleaseDate
 
+### Added
+
+- Support for https://mangadex.org/
+- Option `-l`/`--language` to filter chapters by language.
+- Option `-g`/`--group` to specify the preferred teams in case of conflict.
+
 ## [0.1.1] - 2021-03-18
 
 ### Added

@@ -96,11 +96,19 @@ struct Args {
     /// Stop downloading after this chapter.
     #[clap(short, long, env = "BIBE_END")]
     end: Option<u16>,
+
+    /// Chapters language.
+    #[clap(short, long, env = "BIBE_LANG", default_value = "gb")]
+    lang: String,
+
+    /// Preferred scantrad group in case of conflict.
+    #[clap(short, long, env = "BIBE_GROUPS", value_delimiter = ";")]
+    group: Vec<String>,
 }
 
 fn main() -> Result<()> {
     env_logger::Builder::from_env(
-        Env::default().default_filter_or("hyraigne=info"),
+        Env::default().default_filter_or("hyraigne=info,bibe=info"),
     )
     .init();
 
@@ -113,12 +121,17 @@ fn main() -> Result<()> {
 
     let url = args.url;
     let opts = hyraigne::Options::new(args.delay, args.retry, args.output);
-    let filter = hyraigne::Filter::new(range);
+    let filter = hyraigne::Filter::new(range, Some(args.lang), args.group);
     let spider = hyraigne::get_spider_for(&url, opts)
         .ok_or_else(|| anyhow!("{} not supported", url.as_str()))?;
 
     let series = spider.get_series(&url)?;
     let chapters = spider.get_chapters(&series, filter)?;
+
+    if chapters.is_empty() {
+        log::warn!("no chapters matching the given criteria, nothing to do");
+        return Ok(());
+    }
 
     spider.mkdir(&chapters)?;
     for chapter in chapters {
