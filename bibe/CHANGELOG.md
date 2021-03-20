@@ -15,6 +15,8 @@ Possible sections are:
 
 ## [Unreleased] - ReleaseDate
 
+## [0.1.2] - 2021-03-20
+
 ### Added
 
 - Support for https://mangadex.org/
