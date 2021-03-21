@@ -2,7 +2,7 @@
 
 use once_cell::sync::Lazy;
 
-/// Select `<meta property="og:title" content="TITLE" />`
+/// Select the series title.
 #[allow(clippy::expect_used)]
 pub(super) static SERIES_TITLE_SELECTOR: Lazy<kuchiki::Selectors> =
     Lazy::new(|| {
@@ -22,15 +22,8 @@ pub(super) static SERIES_URL_SELECTOR: Lazy<kuchiki::Selectors> =
 #[allow(clippy::expect_used)]
 pub(super) static CHAPTER_SELECTOR: Lazy<kuchiki::Selectors> =
     Lazy::new(|| {
-        kuchiki::Selectors::compile(".version-chap li")
+        kuchiki::Selectors::compile(".version-chap li a")
             .expect("invalid chapter selector")
-    });
-
-/// Select chapter link in the chapter entry.
-#[allow(clippy::expect_used)]
-pub(super) static CHAPTER_URL_SELECTOR: Lazy<kuchiki::Selectors> =
-    Lazy::new(|| {
-        kuchiki::Selectors::compile("a").expect("invalid chapter URL selector")
     });
 
 /// Select image URLs from the chapter page.

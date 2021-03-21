@@ -1,8 +1,5 @@
 use super::{
-    selectors::{
-        CHAPTER_SELECTOR,
-        CHAPTER_URL_SELECTOR,
-    },
+    selectors::CHAPTER_SELECTOR,
     series,
 };
 use crate::{
@@ -26,9 +23,8 @@ pub(super) fn scrape_from_html<'a>(
 ) -> Result<Vec<Chapter<'a>>> {
     CHAPTER_SELECTOR
         .filter(html.descendants().elements())
-        .map(|chapter| {
-            let chapter = chapter.as_node();
-            let url = url_from_html(chapter)?;
+        .map(|link| {
+            let url = url_from_element(&link)?;
             let id = f64::from(id_from_url(&url)?);
             let volume = None;
 
@@ -68,13 +64,8 @@ fn id_from_url(url: &Url) -> Result<u16> {
 
 /// Extract the chapter URL.
 #[allow(clippy::filter_next)]
-fn url_from_html(html: &kuchiki::NodeRef) -> Result<Url> {
-    let link = CHAPTER_URL_SELECTOR
-        .filter(html.descendants().elements())
-        .next()
-        .ok_or_else(|| Error::Scraping("chapter link not found".to_owned()))?;
-
-    let url = link
+fn url_from_element(element: &kuchiki::ElementData) -> Result<Url> {
+    let url = element
         .attributes
         .borrow()
         .get("href")
