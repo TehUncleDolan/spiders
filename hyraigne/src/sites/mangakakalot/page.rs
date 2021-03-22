@@ -3,6 +3,7 @@ use super::{
     selectors::PAGE_URL_SELECTOR,
 };
 use crate::{
+    utils,
     Chapter,
     Error,
     Page,
@@ -49,7 +50,8 @@ pub(super) fn get_path(path: &Path, page: &Page<'_>, index: usize) -> PathBuf {
     // If we store inside the volume directory, we need to prefix with the
     // chapter ID to avoid name collisions.
     let filename = if page.chapter.volume.is_some() {
-        format!("{:03}-{:03}.{}", page.chapter.id, index, extension)
+        let chapter_id = utils::format_chapter_id(page.chapter.id);
+        format!("{:03}-{:03}.{}", chapter_id, index, extension)
     } else {
         format!("{:03}.{}", index, extension)
     };

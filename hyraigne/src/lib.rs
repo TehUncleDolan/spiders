@@ -57,6 +57,7 @@ mod fs;
 mod sites;
 mod spiders;
 mod types;
+mod utils;
 
 pub use error::{
     Error,

@@ -6,6 +6,7 @@ use super::{
     },
 };
 use crate::{
+    utils,
     Chapter,
     Error,
     Page,
@@ -44,7 +45,7 @@ pub(super) fn extract_from_response<'a>(
 pub(super) fn get_path(path: &Path, page: &Page<'_>, index: usize) -> PathBuf {
     let dirpath = chapter::get_path(path, page.chapter);
     let extension = crate::fs::extname_from_url(&page.main);
-    let chapter = format_id(page.chapter.id);
+    let chapter = utils::format_chapter_id(page.chapter.id);
     let filename = format!("{}-{:03}.{}", chapter, index, extension);
 
     [&dirpath, Path::new(&filename)].iter().collect()
@@ -60,17 +61,6 @@ fn urljoin(base: &Url, suffix: &str) -> Result<Url> {
             err
         ))
     })
-}
-
-/// Format and correctly pad the chapter ID.
-fn format_id(id: f64) -> String {
-    let fract = id.fract();
-    let width = if fract == 0.0 {
-        3
-    } else {
-        2 + format!("{}", fract).len()
-    };
-    format!("{:0width$}", id, width = width)
 }
 
 // Tests {{{
@@ -129,14 +119,6 @@ mod tests {
         let pages = extract_from_response(&response, &chapter).unwrap();
 
         assert_eq!(pages.len(), 62);
-    }
-
-    #[test]
-    fn test_format_id() {
-        assert_eq!(format_id(3.0), "003");
-        assert_eq!(format_id(3.5), "003.5");
-        assert_eq!(format_id(30.5), "030.5");
-        assert_eq!(format_id(300.5), "300.5");
     }
 }
 

@@ -3,6 +3,7 @@ use super::{
     series,
 };
 use crate::{
+    utils,
     Chapter,
     Error,
     Result,
@@ -46,7 +47,8 @@ pub(super) fn get_path(path: &Path, chapter: &Chapter<'_>) -> PathBuf {
     let dirname = if let Some(volume) = chapter.volume.as_ref() {
         format!("{} {:03}", chapter.series.title, volume)
     } else {
-        format!("{} {:03}", chapter.series.title, chapter.id)
+        let chapter_id = utils::format_chapter_id(chapter.id);
+        format!("{} {:03}", chapter.series.title, chapter_id)
     };
     let dirname = crate::fs::sanitize_name(&dirname);
     let path = series::get_path(path, chapter.series);
