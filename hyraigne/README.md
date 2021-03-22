@@ -38,6 +38,7 @@ fn main() {
 ## Supported websites
 
 - [MangaDex](https://mangadex.org/)
+- [MangaKakalot](https://mangakakalot.com/)
 - [WEBTOON](https://www.webtoons.com/)
 - [WebtoonScan](https://webtoonscan.com/)
 

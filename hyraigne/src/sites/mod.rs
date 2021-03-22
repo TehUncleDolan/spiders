@@ -4,6 +4,7 @@ use crate::Options;
 use url::Url;
 
 mod mangadex;
+mod mangakakalot;
 mod traits;
 mod webtoons;
 mod webtoonscan;
@@ -11,6 +12,7 @@ mod webtoonscan;
 pub use traits::Site;
 
 use mangadex::Site as MangaDex;
+use mangakakalot::Site as MangaKakalot;
 use webtoons::Site as Webtoons;
 use webtoonscan::Site as WebtoonScan;
 
@@ -22,6 +24,7 @@ pub fn get_spider_for(url: &Url, opts: Options) -> Option<Box<dyn Site>> {
     url.host_str().and_then(|hostname| {
         let spider: Option<Box<dyn Site>> = match hostname {
             "mangadex.org" => Some(Box::new(MangaDex::new(opts))),
+            "mangakakalot.com" => Some(Box::new(MangaKakalot::new(opts))),
             "www.webtoons.com" => Some(Box::new(Webtoons::new(opts))),
             "webtoonscan.com" => Some(Box::new(WebtoonScan::new(opts))),
             _ => None,
