@@ -65,14 +65,12 @@ fn id_from_url(url: &Url) -> Result<u16> {
 /// Extract the chapter URL.
 #[allow(clippy::filter_next)]
 fn url_from_element(element: &kuchiki::ElementData) -> Result<Url> {
-    let url = element
-        .attributes
-        .borrow()
+    let attributes = element.attributes.borrow();
+    let url = attributes
         .get("href")
-        .ok_or_else(|| Error::Scraping("chapter URL not found".to_owned()))?
-        .to_owned();
+        .ok_or_else(|| Error::Scraping("chapter URL not found".to_owned()))?;
 
-    Url::parse(&url).map_err(|err| {
+    Url::parse(url).map_err(|err| {
         Error::Scraping(format!("invalid chapter URL `{}`: {}", url, err))
     })
 }

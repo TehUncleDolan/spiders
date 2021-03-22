@@ -69,19 +69,17 @@ pub(super) fn id_from_html(html: &kuchiki::NodeRef) -> Result<u16> {
 /// Extract the chapter URL.
 #[allow(clippy::filter_next)]
 fn url_from_html(html: &kuchiki::NodeRef) -> Result<Url> {
-    let link = CHAPTER_URL_SELECTOR
+    let element = CHAPTER_URL_SELECTOR
         .filter(html.descendants().elements())
         .next()
         .ok_or_else(|| Error::Scraping("chapter link not found".to_owned()))?;
+    let attributes = element.attributes.borrow();
 
-    let url = link
-        .attributes
-        .borrow()
+    let url = attributes
         .get("href")
-        .ok_or_else(|| Error::Scraping("chapter URL not found".to_owned()))?
-        .to_owned();
+        .ok_or_else(|| Error::Scraping("chapter URL not found".to_owned()))?;
 
-    Url::parse(&url).map_err(|err| {
+    Url::parse(url).map_err(|err| {
         Error::Scraping(format!("invalid chapter URL `{}`: {}", url, err))
     })
 }

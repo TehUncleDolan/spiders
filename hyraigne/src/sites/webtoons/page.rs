@@ -24,16 +24,12 @@ pub(super) fn scrape_from_html<'a>(
     PAGE_URL_SELECTOR
         .filter(html.descendants().elements())
         .map(|node| {
-            let url = node
-                .attributes
-                .borrow()
-                .get("data-url")
-                .ok_or_else(|| {
-                    Error::Scraping("page URL not found".to_owned())
-                })?
-                .to_owned();
+            let attributes = node.attributes.borrow();
+            let url = attributes.get("data-url").ok_or_else(|| {
+                Error::Scraping("page URL not found".to_owned())
+            })?;
 
-            let url = Url::parse(&url).map_err(|err| {
+            let url = Url::parse(url).map_err(|err| {
                 Error::Scraping(format!("invalid page URL `{}`: {}", url, err))
             })?;
 

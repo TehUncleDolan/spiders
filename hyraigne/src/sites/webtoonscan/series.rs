@@ -51,17 +51,16 @@ fn title_from_html(html: &kuchiki::NodeRef) -> Result<String> {
 /// Extract series URL from `<meta property="og:url" content="URL" />`
 #[allow(clippy::filter_next)]
 fn url_from_html(html: &kuchiki::NodeRef) -> Result<Url> {
-    let url = SERIES_URL_SELECTOR
+    let element = SERIES_URL_SELECTOR
         .filter(html.descendants().elements())
         .next()
-        .ok_or_else(|| Error::Scraping("series URL not found".to_owned()))?
-        .attributes
-        .borrow()
+        .ok_or_else(|| Error::Scraping("series URL not found".to_owned()))?;
+    let attributes = element.attributes.borrow();
+    let url = attributes
         .get("content")
-        .ok_or_else(|| Error::Scraping("series URL is missing".to_owned()))?
-        .to_owned();
+        .ok_or_else(|| Error::Scraping("series URL is missing".to_owned()))?;
 
-    Url::parse(&url).map_err(|err| {
+    Url::parse(url).map_err(|err| {
         Error::Scraping(format!("invalid series URL `{}`: {}", url, err))
     })
 }
