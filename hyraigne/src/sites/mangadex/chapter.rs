@@ -4,7 +4,6 @@ use super::{
         Response,
         SeriesWithChapter,
     },
-    series,
     API_BASE_URL,
 };
 use crate::{
@@ -14,17 +13,10 @@ use crate::{
     Result,
     Series,
 };
-use once_cell::unsync::Lazy;
-use std::{
-    collections::{
-        btree_map::Entry,
-        BTreeMap,
-        HashMap,
-    },
-    path::{
-        Path,
-        PathBuf,
-    },
+use std::collections::{
+    btree_map::Entry,
+    BTreeMap,
+    HashMap,
 };
 use url::Url;
 
@@ -64,7 +56,11 @@ pub(super) fn extract_from_response<'a>(
                 ))
             })?;
             let endpoint = format!("{}/chapter/{}", API_BASE_URL, chapter.id);
-            let volume = (!chapter.volume.is_empty()).then(|| chapter.volume);
+            let volume = Some(if chapter.volume.is_empty() {
+                "XX".to_owned()
+            } else {
+                chapter.volume
+            });
 
             Ok(Chapter {
                 id,
@@ -79,19 +75,6 @@ pub(super) fn extract_from_response<'a>(
             })
         })
         .collect()
-}
-
-/// Get a path to the directory where where the chapter will be saved.
-pub(super) fn get_path(path: &Path, chapter: &Chapter<'_>) -> PathBuf {
-    let unknown_volume = Lazy::new(|| "XX".to_owned());
-    let dirname = crate::fs::sanitize_name(&format!(
-        "{} {:0>2}",
-        chapter.series.title,
-        &chapter.volume.as_ref().unwrap_or(&unknown_volume)
-    ));
-    let path = series::get_path(path, chapter.series);
-
-    [path, dirname].iter().collect()
 }
 
 /// Filter our duplicated chapters based on a computed score.
@@ -169,6 +152,7 @@ mod tests {
         types::Pagination,
         Filter,
     };
+    use std::path::PathBuf;
 
     #[test]
     fn test_scraping() {

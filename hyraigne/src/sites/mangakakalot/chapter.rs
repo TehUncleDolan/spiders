@@ -1,9 +1,5 @@
-use super::{
-    selectors::CHAPTER_SELECTOR,
-    series,
-};
+use super::selectors::CHAPTER_SELECTOR;
 use crate::{
-    utils,
     Chapter,
     Error,
     Result,
@@ -12,10 +8,6 @@ use crate::{
 use kuchiki::traits::*;
 use once_cell::unsync::Lazy;
 use regex::Regex;
-use std::path::{
-    Path,
-    PathBuf,
-};
 use url::Url;
 
 /// Extract every chapter listed in the given HTML.
@@ -38,22 +30,6 @@ pub(super) fn scrape_from_html<'a>(
             })
         })
         .collect::<Result<Vec<_>>>()
-}
-
-/// Get a path to the directory where where the chapter will be saved.
-pub(super) fn get_path(path: &Path, chapter: &Chapter<'_>) -> PathBuf {
-    // If volume is known, chapter will be stored in the volume's directory.
-    // Otherwise, chapter will be saved in its own directory.
-    let dirname = if let Some(volume) = chapter.volume.as_ref() {
-        format!("{} {:03}", chapter.series.title, volume)
-    } else {
-        let chapter_id = utils::format_chapter_id(chapter.id);
-        format!("{} {:03}", chapter.series.title, chapter_id)
-    };
-    let dirname = crate::fs::sanitize_name(&dirname);
-    let path = series::get_path(path, chapter.series);
-
-    [path, dirname].iter().collect()
 }
 
 /// Extract chapter ID and volume name (if any) from chapter's title.
@@ -111,6 +87,7 @@ fn url_from_element(element: &kuchiki::ElementData) -> Result<Url> {
 mod tests {
     use super::*;
     use crate::types::Pagination;
+    use std::path::PathBuf;
 
     #[test]
     fn test_scraping() {

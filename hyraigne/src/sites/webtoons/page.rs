@@ -1,7 +1,4 @@
-use super::{
-    chapter,
-    selectors::PAGE_URL_SELECTOR,
-};
+use super::selectors::PAGE_URL_SELECTOR;
 use crate::{
     Chapter,
     Error,
@@ -9,10 +6,6 @@ use crate::{
     Result,
 };
 use kuchiki::traits::*;
-use std::path::{
-    Path,
-    PathBuf,
-};
 use url::Url;
 
 /// Scrape page links from the chapter's page HTML.
@@ -42,15 +35,6 @@ pub(super) fn scrape_from_html<'a>(
         .collect::<Result<Vec<_>>>()
 }
 
-/// Get the file path of the page on disk.
-pub(super) fn get_path(path: &Path, page: &Page<'_>, index: usize) -> PathBuf {
-    let dirpath = chapter::get_path(path, page.chapter);
-    let extension = crate::fs::extname_from_url(&page.main);
-    let filename = format!("{:03}.{}", index, extension);
-
-    [&dirpath, Path::new(&filename)].iter().collect()
-}
-
 // Tests {{{
 
 #[cfg(test)]
@@ -60,31 +44,7 @@ mod tests {
         types::Pagination,
         Series,
     };
-
-    #[test]
-    fn test_get_path() {
-        let series = Series {
-            title: "Example".to_owned(),
-            url: Url::parse("http://example.com/").unwrap(),
-            pagination: Pagination::new(78, 10),
-        };
-        let chapter = Chapter {
-            id: 10.0,
-            series: &series,
-            volume: None,
-            url: Url::parse("http://example.com/10/").unwrap(),
-        };
-        let page = Page {
-            chapter: &chapter,
-            main: Url::parse("http://example.com/10/uWu.jpg").unwrap(),
-            fallback: None,
-        };
-        let expected = "Downloads/Example/Example 010/042.jpg";
-
-        let path = get_path(Path::new("Downloads"), &page, 42);
-
-        assert_eq!(path, PathBuf::from(expected));
-    }
+    use std::path::PathBuf;
 
     #[test]
     fn test_scraping() {

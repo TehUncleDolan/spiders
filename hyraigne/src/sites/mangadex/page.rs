@@ -1,20 +1,12 @@
-use super::{
-    chapter,
-    models::{
-        ChapterDetail,
-        Response,
-    },
+use super::models::{
+    ChapterDetail,
+    Response,
 };
 use crate::{
-    utils,
     Chapter,
     Error,
     Page,
     Result,
-};
-use std::path::{
-    Path,
-    PathBuf,
 };
 use url::Url;
 
@@ -41,16 +33,6 @@ pub(super) fn extract_from_response<'a>(
         .collect()
 }
 
-/// Get the file path of the page on disk.
-pub(super) fn get_path(path: &Path, page: &Page<'_>, index: usize) -> PathBuf {
-    let dirpath = chapter::get_path(path, page.chapter);
-    let extension = crate::fs::extname_from_url(&page.main);
-    let chapter = utils::format_chapter_id(page.chapter.id);
-    let filename = format!("{}-{:03}.{}", chapter, index, extension);
-
-    [&dirpath, Path::new(&filename)].iter().collect()
-}
-
 /// Append `suffix` to `base` and parse the result as an URL.
 fn urljoin(base: &Url, suffix: &str) -> Result<Url> {
     base.join(&suffix).map_err(|err| {
@@ -72,31 +54,7 @@ mod tests {
         types::Pagination,
         Series,
     };
-
-    #[test]
-    fn test_get_path() {
-        let series = Series {
-            title: "Example".to_owned(),
-            url: Url::parse("http://example.com/").unwrap(),
-            pagination: Pagination::new(0, 0),
-        };
-        let chapter = Chapter {
-            id: 30.0,
-            series: &series,
-            volume: Some("10".to_owned()),
-            url: Url::parse("http://example.com/30/").unwrap(),
-        };
-        let page = Page {
-            chapter: &chapter,
-            main: Url::parse("http://example.com/10/uWu.jpg").unwrap(),
-            fallback: None,
-        };
-        let expected = "Downloads/Example/Example 10/030-042.jpg";
-
-        let path = get_path(Path::new("Downloads"), &page, 42);
-
-        assert_eq!(path, PathBuf::from(expected));
-    }
+    use std::path::PathBuf;
 
     #[test]
     fn test_scraping() {

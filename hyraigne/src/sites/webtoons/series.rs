@@ -13,10 +13,6 @@ use crate::{
     Series,
 };
 use kuchiki::traits::*;
-use std::path::{
-    Path,
-    PathBuf,
-};
 use url::Url;
 
 /// Scrape series info from the given HTML.
@@ -26,13 +22,6 @@ pub(super) fn scrape_from_html(html: &kuchiki::NodeRef) -> Result<Series> {
         url: url_from_html(&html)?,
         pagination: pagination_from_html(&html)?,
     })
-}
-
-/// Get a path to the directory where where the series will be saved.
-pub(super) fn get_path(path: &Path, series: &Series) -> PathBuf {
-    let dirname = crate::fs::sanitize_name(&series.title);
-
-    [path, &dirname].iter().collect()
 }
 
 /// Extract series title from `<meta property="og:title" content="TITLE" />`
@@ -92,6 +81,7 @@ fn pagination_from_html(html: &kuchiki::NodeRef) -> Result<Pagination> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::path::PathBuf;
 
     #[test]
     fn test_scraping() {

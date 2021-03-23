@@ -10,10 +10,6 @@ use crate::{
     Error,
     Result,
 };
-use std::path::{
-    Path,
-    PathBuf,
-};
 use url::Url;
 
 /// Extract series metadata from the API response.
@@ -34,18 +30,12 @@ pub(super) fn extract_from_response(
     })
 }
 
-/// Get a path to the directory where where the series will be saved.
-pub(super) fn get_path(path: &Path, series: &crate::Series) -> PathBuf {
-    let dirname = crate::fs::sanitize_name(&series.title);
-
-    [path, &dirname].iter().collect()
-}
-
 // Tests {{{
 
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::path::PathBuf;
 
     #[test]
     fn test_scraping() {

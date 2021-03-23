@@ -122,7 +122,7 @@ impl crate::Site for Site {
 
     fn mkdir(&self, chapters: &[Chapter<'_>]) -> Result<()> {
         for chapter in chapters {
-            let path = chapter::get_path(&self.output, chapter);
+            let path = chapter.path(&self.output);
             crate::fs::mkdir_p(&path)?;
         }
 
@@ -140,7 +140,7 @@ impl crate::Site for Site {
 
         for (idx, page) in pages.iter().enumerate() {
             // Compute the image path.
-            let path = page::get_path(&self.output, page, idx + 1);
+            let path = page.path(&self.output, idx + 1);
 
             // Skip it if it has already been downloaded.
             if path.exists() {
