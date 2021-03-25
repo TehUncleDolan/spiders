@@ -19,12 +19,15 @@ pub(super) fn extract_from_response<'a>(
         .data
         .pages
         .iter()
-        .map(|page| {
+        .enumerate()
+        .map(|(idx, page)| {
             let server_url = &response.data.server;
             let fallback_url = &response.data.server_fallback;
             let path = format!("{}/{}", response.data.hash, page);
 
+            #[allow(clippy::cast_possible_truncation)] // Page number is small.
             Ok(Page {
+                id: (idx + 1) as u16,
                 chapter,
                 main: urljoin(server_url, &path)?,
                 fallback: Some(urljoin(fallback_url, &path)?),

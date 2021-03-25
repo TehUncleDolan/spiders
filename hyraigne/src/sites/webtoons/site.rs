@@ -138,9 +138,9 @@ impl crate::Site for Site {
 
         let mut bytes: Vec<u8> = Vec::new();
 
-        for (idx, page) in pages.iter().enumerate() {
+        for page in pages.iter() {
             // Compute the image path.
-            let path = page.path(&self.output, idx + 1);
+            let path = page.path(&self.output);
 
             // Skip it if it has already been downloaded.
             if path.exists() {

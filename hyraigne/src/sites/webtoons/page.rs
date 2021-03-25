@@ -9,14 +9,14 @@ use kuchiki::traits::*;
 use url::Url;
 
 /// Scrape page links from the chapter's page HTML.
-#[allow(clippy::filter_map)]
 pub(super) fn scrape_from_html<'a>(
     html: &kuchiki::NodeRef,
     chapter: &'a Chapter<'_>,
 ) -> Result<Vec<Page<'a>>> {
     PAGE_URL_SELECTOR
         .filter(html.descendants().elements())
-        .map(|node| {
+        .enumerate()
+        .map(|(idx, node)| {
             let attributes = node.attributes.borrow();
             let url = attributes.get("data-url").ok_or_else(|| {
                 Error::Scraping("page URL not found".to_owned())
@@ -26,7 +26,9 @@ pub(super) fn scrape_from_html<'a>(
                 Error::Scraping(format!("invalid page URL `{}`: {}", url, err))
             })?;
 
+            #[allow(clippy::cast_possible_truncation)] // Page number is small.
             Ok(Page {
+                id: (idx + 1) as u16,
                 chapter,
                 main: url,
                 fallback: None,

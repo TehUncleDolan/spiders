@@ -8,6 +8,9 @@ use url::Url;
 
 /// A page.
 pub struct Page<'a> {
+    /// Pqge number.
+    pub(crate) id: u16,
+
     /// Chapter containing this page.
     pub(crate) chapter: &'a Chapter<'a>,
 
@@ -20,16 +23,16 @@ pub struct Page<'a> {
 
 impl Page<'_> {
     /// Get the file path of the page on disk.
-    pub(crate) fn path(&self, basedir: &Path, index: usize) -> PathBuf {
+    pub(crate) fn path(&self, basedir: &Path) -> PathBuf {
         let dirpath = self.chapter.path(basedir);
         let extension = crate::fs::extname_from_url(&self.main);
         // If we store inside the volume directory, we need to prefix with the
         // chapter ID to avoid name collisions.
         let filename = if self.chapter.volume.is_some() {
             let chapter_id = utils::format_chapter_id(self.chapter.id);
-            format!("{:03}-{:03}.{}", chapter_id, index, extension)
+            format!("{:03}-{:03}.{}", chapter_id, self.id, extension)
         } else {
-            format!("{:03}.{}", index, extension)
+            format!("{:03}.{}", self.id, extension)
         };
 
         [&dirpath, Path::new(&filename)].iter().collect()
@@ -60,13 +63,14 @@ mod tests {
             url: Url::parse("http://example.com/30/").unwrap(),
         };
         let page = Page {
+            id: 42,
             chapter: &chapter,
             main: Url::parse("http://example.com/10/uWu.jpg").unwrap(),
             fallback: None,
         };
         let expected = "Downloads/Example/Example 10/030-042.jpg";
 
-        let path = page.path(Path::new("Downloads"), 42);
+        let path = page.path(Path::new("Downloads"));
 
         assert_eq!(path, PathBuf::from(expected));
     }
@@ -85,13 +89,14 @@ mod tests {
             url: Url::parse("http://example.com/30/").unwrap(),
         };
         let page = Page {
+            id: 42,
             chapter: &chapter,
             main: Url::parse("http://example.com/10/uWu.jpg").unwrap(),
             fallback: None,
         };
         let expected = "Downloads/Example/Example 030/042.jpg";
 
-        let path = page.path(Path::new("Downloads"), 42);
+        let path = page.path(Path::new("Downloads"));
 
         assert_eq!(path, PathBuf::from(expected));
     }
