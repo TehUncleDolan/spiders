@@ -15,6 +15,10 @@ Possible sections are:
 
 ## [Unreleased] - ReleaseDate
 
+### Added
+
+- Support for https://mangakakalot.com/
+
 ## [0.1.2] - 2021-03-20
 
 ### Added
