@@ -15,6 +15,8 @@ Possible sections are:
 
 ## [Unreleased] - ReleaseDate
 
+## [0.1.3] - 2021-03-25
+
 ### Added
 
 - Web spider for https://mangakakalot.com/.
