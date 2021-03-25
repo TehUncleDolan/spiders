@@ -69,13 +69,12 @@ pub use error::{
 pub use sites::get_spider_for;
 pub use sites::Site;
 
-pub use types::{
-    Chapter,
-    Filter,
-    Options,
-    Page,
-    Series,
-};
+// Ditto, same bug…
+pub use types::Chapter;
+pub use types::Filter;
+pub use types::Options;
+pub use types::Page;
+pub use types::Series;
 
 // To test examples in the README.
 // From https://github.com/rust-lang/cargo/issues/383#issuecomment-720873790
