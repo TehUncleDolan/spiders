@@ -8,6 +8,7 @@ subset) of a series from websites like `webtoons.com` or `mangadex.org`.
 ## Supported website
 
 - [MangaDex](https://mangadex.org/)
+- [MangaKakalot](https://mangakakalot.com/)
 - [WEBTOON](https://www.webtoons.com/)
 - [WebtoonScan](https://webtoonscan.com/)
 

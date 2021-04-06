@@ -15,6 +15,10 @@ Possible sections are:
 
 ## [Unreleased] - ReleaseDate
 
+### Fixed
+
+- Missing entry in the README
+
 ## [0.1.3] - 2021-03-25
 
 ### Added
