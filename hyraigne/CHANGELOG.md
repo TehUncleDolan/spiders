@@ -15,6 +15,10 @@ Possible sections are:
 
 ## [Unreleased] - ReleaseDate
 
+### Fixed
+
+- Download from https://webtoons.com (bypass the age gating).
+
 ## [0.1.3] - 2021-03-25
 
 ### Added

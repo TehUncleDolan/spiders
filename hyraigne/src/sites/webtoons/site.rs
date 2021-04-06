@@ -13,6 +13,7 @@ use crate::{
     Result,
     Series,
 };
+use cookie_store::CookieStore;
 use std::path::PathBuf;
 use url::Url;
 
@@ -24,9 +25,18 @@ pub(crate) struct Site {
 
 impl Site {
     /// Initialize the web spider with the given options.
+    #[allow(clippy::expect_used)] // Hardcoded values should be valid…
     pub(crate) fn new(options: Options) -> Self {
+        let mut store = CookieStore::default();
+        store
+            .insert_raw(
+                &ureq::Cookie::new("pagGDPR", "true"),
+                &Url::parse("https://www.webtoons.com/").expect("valid URL"),
+            )
+            .expect("pagGDPR cookie");
+
         Self {
-            spider: HttpClient::new(options.delay, options.retry, None),
+            spider: HttpClient::new(options.delay, options.retry, Some(store)),
             output: options.output,
         }
     }
