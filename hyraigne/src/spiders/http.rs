@@ -2,6 +2,7 @@ use crate::{
     Error,
     Result,
 };
+use cookie_store::CookieStore;
 use kuchiki::traits::*;
 use serde::de::DeserializeOwned;
 use std::{
@@ -27,9 +28,17 @@ pub(crate) struct Spider {
 
 impl Spider {
     /// Initialize a new web spider.
-    pub(crate) fn new(delay: time::Duration, retry: u8) -> Self {
+    pub(crate) fn new(
+        delay: time::Duration,
+        retry: u8,
+        cookie_store: Option<CookieStore>,
+    ) -> Self {
+        let agent = cookie_store.map_or_else(ureq::Agent::new, |store| {
+            ureq::builder().cookie_store(store).build()
+        });
+
         Self {
-            agent: ureq::Agent::new(),
+            agent,
             delay,
             retry,
         }

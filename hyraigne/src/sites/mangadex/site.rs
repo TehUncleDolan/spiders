@@ -35,7 +35,7 @@ impl Site {
     /// Initialize the web spider with the given options.
     pub(crate) fn new(options: Options) -> Self {
         Self {
-            spider: HttpClient::new(options.delay, options.retry),
+            spider: HttpClient::new(options.delay, options.retry, None),
             output: options.output,
         }
     }
