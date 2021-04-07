@@ -51,7 +51,7 @@ dependencies = [
  "anyhow",
  "clap",
  "env_logger",
- "hyraigne",
+ "hyraigne 0.1.4",
  "log",
  "url",
 ]
@@ -320,6 +320,24 @@ name = "humantime"
 version = "2.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9a3a5bfb195931eeb336b2a7b4d761daec841b97f947d34394601737a7bba5e4"
+
+[[package]]
+name = "hyraigne"
+version = "0.1.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "475b4eb285edcc8db78e7b7c6d25a3bd8cbf79a9ed383963cba7ece8b6b3fff3"
+dependencies = [
+ "cookie_store",
+ "kuchiki",
+ "log",
+ "once_cell",
+ "regex",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "ureq",
+ "url",
+]
 
 [[package]]
 name = "hyraigne"

@@ -17,7 +17,8 @@ Possible sections are:
 
 ### Fixed
 
-- Missing entry in the README
+- Missing entry in the README.
+- https://webtoons.com scraping (bypass age gating).
 
 ## [0.1.3] - 2021-03-25
 
