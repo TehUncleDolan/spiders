@@ -10,7 +10,7 @@ readme = "README.md"
 keywords = ["scraping", "manga", "manhua", "manhwa", "webtoon"]
 
 [dependencies]
-cookie_store = { version = "0.12", default-features = false }
+cookie_store = { version = "0.13", default-features = false }
 thiserror = "1.0"
 kuchiki = "0.8"
 log = "0.4"
